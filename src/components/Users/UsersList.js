@@ -1,5 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const UsersList = ({ users }) => {
   return (
@@ -17,8 +18,10 @@ const UsersList = ({ users }) => {
             return (
               <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.username}</td>
-                <td>{user.isDisabled === false ? "No" : "Yes"}</td>
+                <td>
+                  <Link to={'/user/' + user.id}>{user.username}</Link>
+                </td>
+                <td>{user.isDisabled === false ? 'No' : 'Yes'}</td>
               </tr>
             );
           })}
