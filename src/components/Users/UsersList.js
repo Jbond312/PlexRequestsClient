@@ -1,26 +1,35 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-const UsersList = () => {
+const UsersList = ({ users }) => {
   return (
     <>
       <table className="table">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Name</th>
-            <th>E-Mail</th>
-            <th>Is Enabled</th>
+            <th>Disabled</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>User A</td>
-            <td>user@email.com</td>
-            <td>true</td>
-          </tr>
+          {users.map((user) => {
+            return (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.username}</td>
+                <td>{user.isDisabled === false ? "No" : "Yes"}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
   );
+};
+
+UsersList.propTypes = {
+  users: PropTypes.array.isRequired,
 };
 
 export default UsersList;
