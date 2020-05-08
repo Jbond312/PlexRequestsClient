@@ -16,11 +16,20 @@ const UsersPage = ({ actions, users, isLoading }) => {
     }
   }, [users.length]);
 
+  function handleChange(event, user) {
+    console.log(event);
+    console.log(user);
+  }
+
   return (
     <>
       <h1>Users</h1>
 
-      {isLoading ? <Spinner /> : <UsersList users={users}></UsersList>}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <UsersList users={users} onChange={handleChange}></UsersList>
+      )}
     </>
   );
 };

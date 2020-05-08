@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ToggleSwitch from '../common/ToggleSwitch';
 
-const UsersList = ({ users }) => {
+const UsersList = ({ users, onChange }) => {
   return (
     <>
       <table className="table">
@@ -25,9 +25,12 @@ const UsersList = ({ users }) => {
                 </td>
                 <td>{user.lastLogin}</td>
                 <td className="switchCol">
-                  <ToggleSwitch />
+                  <ToggleSwitch
+                    name="isDisabled"
+                    value={user.isDisabled}
+                    onChange={(e) => onChange(e, user)}
+                  />
                 </td>
-                {/* <td>{user.isDisabled === false ? 'No' : 'Yes'}</td> */}
               </tr>
             );
           })}
@@ -39,6 +42,7 @@ const UsersList = ({ users }) => {
 
 UsersList.propTypes = {
   users: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default UsersList;
