@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ToggleSwitch from '../common/ToggleSwitch';
 
 const UsersList = ({ users }) => {
   return (
@@ -8,9 +9,10 @@ const UsersList = ({ users }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Disabled</th>
+            <th>User Id</th>
+            <th>Username</th>
+            <th>Last Login</th>
+            <th>Disable</th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +23,11 @@ const UsersList = ({ users }) => {
                 <td>
                   <Link to={'/user/' + user.id}>{user.username}</Link>
                 </td>
-                <td>{user.isDisabled === false ? 'No' : 'Yes'}</td>
+                <td>{user.lastLogin}</td>
+                <td className="switchCol">
+                  <ToggleSwitch />
+                </td>
+                {/* <td>{user.isDisabled === false ? 'No' : 'Yes'}</td> */}
               </tr>
             );
           })}

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
-import Spinner from "../common/Spinner";
-import UsersList from "./UsersList";
-import { getUsers, getIsLoading } from "../redux/selectors/usersSelectors";
-import * as userActions from "../redux/actions/userActions";
+import Spinner from '../common/Spinner';
+import UsersList from './UsersList';
+import { getUsers, getIsLoading } from '../redux/selectors/usersSelectors';
+import * as userActions from '../redux/actions/userActions';
 
 const UsersPage = ({ actions, users, isLoading }) => {
   useEffect(() => {
@@ -18,7 +18,7 @@ const UsersPage = ({ actions, users, isLoading }) => {
 
   return (
     <>
-      <h1>Users Page</h1>
+      <h1>Users</h1>
 
       {isLoading ? <Spinner /> : <UsersList users={users}></UsersList>}
     </>
