@@ -37,7 +37,7 @@ export function login(username, password) {
         (response) => {
           if (
             response.data.accessToken.length > 0 &&
-            response.data.refreshToken > 0
+            response.data.refreshToken.length > 0
           ) {
             return dispatch(loginSuccess(response.data));
           } else {

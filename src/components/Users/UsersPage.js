@@ -8,6 +8,7 @@ import Spinner from '../common/Spinner';
 import UsersList from './UsersList';
 import { getUsers, getIsLoading } from '../redux/selectors/usersSelectors';
 import * as userActions from '../redux/actions/userActions';
+import { toast } from 'react-toastify';
 
 const UsersPage = ({ actions, users, isLoading }) => {
   useEffect(() => {
@@ -16,19 +17,21 @@ const UsersPage = ({ actions, users, isLoading }) => {
     }
   }, [users.length]);
 
-  function handleChange(event, user) {
-    console.log(event);
-    console.log(user);
+  function handleUserDisabled(event, user) {
+    const updatedUser = { ...user, isDisabled: event.target.checked };
+    actions.updateUser(updatedUser).catch(() => {
+      toast.error('There was an error when updating the user');
+    });
   }
 
   return (
     <>
-      <h1>Users</h1>
+      <h1 style={{ marginBottom: '50px' }}>Users</h1>
 
       {isLoading ? (
         <Spinner />
       ) : (
-        <UsersList users={users} onChange={handleChange}></UsersList>
+        <UsersList users={users} onChange={handleUserDisabled}></UsersList>
       )}
     </>
   );
@@ -51,6 +54,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       getUsers: bindActionCreators(userActions.getUsers, dispatch),
+      updateUser: bindActionCreators(userActions.updateUser, dispatch),
     },
   };
 }

@@ -23,23 +23,23 @@ export function getUsersFailed(errors) {
   };
 }
 
-export function updateUserRequested() {
+export function updateUserRequested(user) {
   return {
     type: ActionTypes.UPDATE_USER_REQUESTED,
-  };
-}
-
-export function updateUserSuccess(user) {
-  return {
-    type: ActionTypes.UPDATE_USER_SUCCESS,
     user: user,
   };
 }
 
-export function updateUserFailed(errors) {
+export function updateUserSuccess() {
+  return {
+    type: ActionTypes.UPDATE_USER_SUCCESS,
+  };
+}
+
+export function updateUserFailed(data) {
   return {
     type: ActionTypes.UPDATE_USER_FAILED,
-    errors: errors,
+    data: data,
   };
 }
 
@@ -56,11 +56,11 @@ export function getUsers() {
 
 export function updateUser(user) {
   return function (dispatch) {
-    dispatch(updateUserRequested());
+    dispatch(updateUserRequested(user));
     const uri = baseUrl + endpoints.upateUser(user);
     return axios.put(uri, user).then(
       () => dispatch(updateUserSuccess(user)),
-      (errors) => dispatch(updateUserFailed(errors)),
+      (errors) => dispatch(updateUserFailed({ errors, user })),
     );
   };
 }

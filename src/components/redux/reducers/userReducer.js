@@ -1,4 +1,5 @@
 import Actions from '../actions';
+import { updateUser } from '../actions/userActions';
 
 export const initialState = {
   users: [],
@@ -13,6 +14,23 @@ export default function (state = initialState, action) {
       return { ...state, users: action.users, loading: false };
     case Actions.GET_USERS_FAILED:
       return { ...state, users: [], loading: false };
+    case Actions.UPDATE_USER_REQUESTED: {
+      const updatedUsers = state.users.map((user) =>
+        user.id === action.user.id ? action.user : user,
+      );
+      return { ...state, users: updatedUsers };
+    }
+    case Actions.UPDATE_USER_SUCCESS: {
+      return state;
+    }
+    case Actions.UPDATE_USER_FAILED: {
+      let updatedUsers = state.users.map((user) =>
+        user.id === action.data.user.id
+          ? { ...action.data.user, isDisabled: !action.data.user.isDisabled }
+          : user,
+      );
+      return { ...state, users: updatedUsers };
+    }
     default:
       return state;
   }

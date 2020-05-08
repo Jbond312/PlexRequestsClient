@@ -5,7 +5,7 @@ const activeStyle = { color: '#E9A049' };
 
 const Header = () => {
   return (
-    <>
+    <div id="header">
       <NavLink exact to="/" activeStyle={activeStyle}>
         Home
       </NavLink>
@@ -13,7 +13,7 @@ const Header = () => {
       <NavLink to="/users" activeStyle={activeStyle}>
         Users
       </NavLink>
-    </>
+    </div>
   );
 };
 
