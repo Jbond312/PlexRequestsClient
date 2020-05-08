@@ -18,7 +18,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   plugins: [
-    new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    //new webpackBundleAnalyzer.BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
