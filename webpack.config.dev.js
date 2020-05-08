@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 process.env.NODE_ENV = 'development';
 
@@ -24,6 +25,7 @@ module.exports = {
     https: false,
   },
   plugins: [
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:3001'),
     }),
