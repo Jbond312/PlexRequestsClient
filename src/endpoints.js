@@ -1,5 +1,5 @@
 export default {
-  getUsers: () => '/api/users',
-  upateUser: (user) => `/api/users/${user.id}`,
+  getUsers: () => '/api/user',
+  upateUser: (user) => `/api/user/${user.id}`,
   login: () => '/api/auth/login',
 };

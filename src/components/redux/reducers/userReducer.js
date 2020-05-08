@@ -1,5 +1,4 @@
 import Actions from '../actions';
-import { updateUser } from '../actions/userActions';
 
 export const initialState = {
   users: [],

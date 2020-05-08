@@ -45,8 +45,6 @@ const LoginPage = ({ isAuthenticated, login }) => {
     }
 
     login(loginData.username, loginData.password);
-
-    console.log('LOGIN: ', loginData);
   }
 
   return (
