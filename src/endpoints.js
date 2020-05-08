@@ -1,3 +1,4 @@
 export default {
-  getUsers: () => "/api/users",
+  getUsers: () => '/api/users',
+  login: () => '/api/auth/login',
 };

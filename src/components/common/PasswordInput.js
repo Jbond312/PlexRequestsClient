@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TextInput = ({
+const PasswordInput = ({
   name,
   label,
   onChange,
@@ -20,7 +20,7 @@ const TextInput = ({
       <label htmlFor={name}>{label}</label>
       <div className="field">
         <input
-          type="text"
+          type="password"
           name={name}
           className="form-control"
           placeholder={placeholder}
@@ -34,7 +34,7 @@ const TextInput = ({
   );
 };
 
-TextInput.propTypes = {
+PasswordInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -44,4 +44,4 @@ TextInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-export default TextInput;
+export default PasswordInput;

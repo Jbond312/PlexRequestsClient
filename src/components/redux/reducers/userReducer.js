@@ -1,5 +1,9 @@
-import Actions from "../actions";
-import initialState from "./initialState";
+import Actions from '../actions';
+
+export const initialState = {
+  users: [],
+  loading: false,
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {

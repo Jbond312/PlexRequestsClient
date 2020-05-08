@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import UsersPage from './Users/UsersPage';
 import PageNotFound from './PageNotFound';
 import ManageUserPage from './Users/ManageUserPage';
+import LoginPage from './Login/LoginPage';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/user/:id" component={ManageUserPage} />
         <Route path="/users" component={UsersPage} />
         <Route component={PageNotFound} />

@@ -8,7 +8,7 @@ nav {
 }
 
 body {
-  background-color: #1f2326;
+  background-color: #313437;
 }
 
 table,
@@ -35,9 +35,9 @@ tbody tr:hover {
 }
 
 tbody tr:hover a {
-  color: white;
+  color: #eeeeee;
 }
 
 a:hover {
-  color: white;
+  color: #eeeeee;
 }
