@@ -22,7 +22,9 @@ module.exports = {
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.API_URL': JSON.stringify('http://localhost:3001'),
+      'process.env.API_URL': JSON.stringify(
+        'https://plex-requests-fa-dev.azurewebsites.net',
+      ),
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
