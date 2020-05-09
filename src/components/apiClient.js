@@ -52,7 +52,7 @@ export function setApiInterceptors() {
           })
             .then((res) => res.json())
             .then((res) => {
-              setCookie('token', res.accessToken, 10);
+              setCookie('token', res.accessToken, 60 * 24 * 30);
               setCookie('refreshToken', res.refreshToken, 60 * 24 * 30);
               originalReq.headers[
                 'Authorization'
