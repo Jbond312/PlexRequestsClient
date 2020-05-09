@@ -8,7 +8,7 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'decb0b8b-c86b-4b65-8ef9-db8f5660b121'
+  azureSubscription: '6b626f57-1340-4d78-9527-982ec8abcde5'
 
   # Web app name
   webAppName: 'plex-client-dev'
