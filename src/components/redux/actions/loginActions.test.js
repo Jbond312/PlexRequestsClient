@@ -1,15 +1,14 @@
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
-import axios from 'axios';
-
+import apiClient from '../../apiClient';
 import * as loginActions from './loginActions';
 import ActionTypes from './index';
 import loginSuccessMock from '../mocks/loginSuccess';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-jest.mock('axios');
+jest.mock('../../apiClient');
 
 const expectedCredentials = {
   username: 'Joe Bloggs',
@@ -48,7 +47,7 @@ describe('Actions > Login', () => {
   });
 
   it('should call login endpoint', () => {
-    axios.post.mockImplementationOnce(() =>
+    apiClient.post.mockImplementationOnce(() =>
       Promise.resolve({ data: loginSuccessMock }),
     );
 

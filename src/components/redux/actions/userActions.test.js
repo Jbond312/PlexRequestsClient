@@ -1,15 +1,14 @@
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
-import axios from 'axios';
-
+import apiClient from '../../apiClient';
 import * as userActions from './userActions';
 import ActionTypes from './index';
 import usersMock from '../mocks/usersList';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-jest.mock('axios');
+jest.mock('../../apiClient');
 
 describe('Actions > GetUsers', () => {
   it('should create an action when users are requested', () => {
@@ -40,7 +39,7 @@ describe('Actions > GetUsers', () => {
   });
 
   it('should fetchUsersList', () => {
-    axios.get.mockImplementationOnce(() =>
+    apiClient.get.mockImplementationOnce(() =>
       Promise.resolve({ data: usersMock }),
     );
 
@@ -90,7 +89,7 @@ describe('Actions > UpdateUser', () => {
 
   it('should updateUser', () => {
     const user = usersMock[0];
-    axios.put.mockImplementationOnce(() =>
+    apiClient.put.mockImplementationOnce(() =>
       Promise.resolve({ data: usersMock }),
     );
 
