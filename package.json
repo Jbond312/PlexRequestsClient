@@ -2,7 +2,7 @@
   "name": "plex-requests",
   "description": "Plex Requests React Client",
   "scripts": {
-    "start": "run-p start:dev",
+    "start": "webpack-dev-server --config webpack.config.prod.js",
     "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
     "test": "jest --watchAll",
     "test:ci": "jest",
