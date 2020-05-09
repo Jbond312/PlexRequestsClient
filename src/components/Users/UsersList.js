@@ -23,7 +23,19 @@ const UsersList = ({ users, onChange }) => {
                 <td>
                   <Link to={'/user/' + user.id}>{user.username}</Link>
                 </td>
-                <td>{user.lastLogin}</td>
+                <td>
+                  {(user.lastLogin &&
+                    new Intl.DateTimeFormat('en-GB', {
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      hour12: false,
+                    }).format(Date.parse(user.lastLogin))) ||
+                    'Never logged in'}
+                </td>
                 <td className="switchCol">
                   <ToggleSwitch
                     name="isDisabled"
