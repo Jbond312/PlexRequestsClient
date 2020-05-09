@@ -30,17 +30,43 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: "12.16.2"
+      displayName: "Install Node.js"
+
+    - task: Npm@1
+      displayName: "Install Npm"
+      inputs:
+        command: "install"
+
+    - task: Npm@1
+      displayName: "Tests"
+      inputs:
+        command: "custom"
+        customCommand: "run test:ci"
+
+    - task: Npm@1
+      displayName: "Build"
+      inputs:
+        command: "custom"
+        customCommand: "run build:ci"
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+    - task: PublishBuildArtifacts@1
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      inputs:
+        PathtoPublish: 'drop'
+        ArtifactName: '_PlexRequestsClient-CI'
+        publishLocation: 'FilePath'
 
 - stage: Deploy
   displayName: Deploy stage
@@ -63,9 +89,5 @@ stages:
               appType: webAppLinux
               WebAppName: $(webAppName)
               packageForLinux: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              RuntimeStack: 'NODE|10.10'
-              StartupCommand: 'npm run start'
-              ScriptType: 'Inline Script'
-              InlineScript: |
-                npm install
-                npm run build --if-present
+              RuntimeStack: 'NODE|12-lts'
+              StartupCommand: 'npm run serve:build'
