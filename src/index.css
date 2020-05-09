@@ -144,3 +144,14 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.btn-save {
+  float: right;
+  background-color: #d58915;
+  border: none;
+}
+
+.btn-save:hover {
+  background-color: #eac48a;
+  border: none;
+}

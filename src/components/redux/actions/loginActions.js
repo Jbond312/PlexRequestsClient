@@ -40,7 +40,7 @@ export function login(username, password) {
             response.data.accessToken.length > 0 &&
             response.data.refreshToken.length > 0
           ) {
-            setCookie('token', response.data.accessToken, 10);
+            setCookie('token', response.data.accessToken, 60 * 24 * 30);
             setCookie('refreshToken', response.data.refreshToken, 60 * 24 * 30);
             return dispatch(loginSuccess(response.data));
           } else {
