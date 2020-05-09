@@ -5,6 +5,7 @@ import apiClient from '../../apiClient';
 import * as userActions from './userActions';
 import ActionTypes from './index';
 import usersMock from '../mocks/usersList';
+import userRoles from '../mocks/userRoles';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -51,6 +52,52 @@ describe('Actions > GetUsers', () => {
     const store = mockStore({ usersList: {} });
 
     return store.dispatch(userActions.getUsers()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+});
+
+describe('Actions > GetUserRoles', () => {
+  it('should create an action when users roles are requested', () => {
+    const expected = {
+      type: ActionTypes.GET_USERROLES_REQUESTED,
+    };
+
+    expect(userActions.getUserRolessRequested()).toEqual(expected);
+  });
+
+  it('should create an action when user roles request fails', () => {
+    const errors = 'Something went wrong!';
+    const expected = {
+      type: ActionTypes.GET_USERROLES_FAILED,
+      errors: errors,
+    };
+
+    expect(userActions.getUserRolesFailed(errors)).toEqual(expected);
+  });
+
+  it('should create an action when user roles received', () => {
+    const expected = {
+      type: ActionTypes.GET_USERROLES_RECEIVED,
+      userRoles: userRoles,
+    };
+
+    expect(userActions.getUserRolesReceived(userRoles)).toEqual(expected);
+  });
+
+  it('should fetchUserRoles', () => {
+    apiClient.get.mockImplementationOnce(() =>
+      Promise.resolve({ data: userRoles }),
+    );
+
+    const expectedActions = [
+      { type: ActionTypes.GET_USERROLES_REQUESTED },
+      { type: ActionTypes.GET_USERROLES_RECEIVED, userRoles: userRoles },
+    ];
+
+    const store = mockStore({ usersList: {} });
+
+    return store.dispatch(userActions.getUserRoles()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });

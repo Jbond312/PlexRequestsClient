@@ -23,6 +23,26 @@ export function getUsersFailed(errors) {
   };
 }
 
+export function getUserRolessRequested() {
+  return {
+    type: ActionTypes.GET_USERROLES_REQUESTED,
+  };
+}
+
+export function getUserRolesReceived(userRoles) {
+  return {
+    type: ActionTypes.GET_USERROLES_RECEIVED,
+    userRoles: userRoles,
+  };
+}
+
+export function getUserRolesFailed(errors) {
+  return {
+    type: ActionTypes.GET_USERROLES_FAILED,
+    errors: errors,
+  };
+}
+
 export function updateUserRequested(user) {
   return {
     type: ActionTypes.UPDATE_USER_REQUESTED,
@@ -50,6 +70,17 @@ export function getUsers(includeDisabled = true) {
     return apiClient.get(uri).then(
       (response) => dispatch(getUsersReceived(response.data)),
       (errors) => dispatch(getUsersFailed(errors)),
+    );
+  };
+}
+
+export function getUserRoles() {
+  return function (dispatch) {
+    dispatch(getUserRolessRequested());
+    const uri = baseUrl + endpoints.getUserRoles();
+    return apiClient.get(uri).then(
+      (response) => dispatch(getUserRolesReceived(response.data)),
+      (errors) => dispatch(getUserRolesFailed(errors)),
     );
   };
 }

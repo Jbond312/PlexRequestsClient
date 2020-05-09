@@ -2,6 +2,7 @@ import Actions from '../actions';
 
 export const initialState = {
   users: [],
+  userRoles: [],
   loading: false,
 };
 
@@ -13,6 +14,12 @@ export default function (state = initialState, action) {
       return { ...state, users: action.users, loading: false };
     case Actions.GET_USERS_FAILED:
       return { ...state, users: [], loading: false };
+    case Actions.GET_USERROLES_REQUESTED:
+      return { ...state, loading: true };
+    case Actions.GET_USERROLES_RECEIVED:
+      return { ...state, userRoles: action.userRoles, loading: false };
+    case Actions.GET_USERROLES_FAILED:
+      return { ...state, userRoles: [], loading: false };
     case Actions.UPDATE_USER_REQUESTED: {
       const updatedUsers = state.users.map((user) =>
         user.id === action.user.id ? action.user : user,

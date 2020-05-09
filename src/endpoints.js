@@ -1,5 +1,6 @@
 export default {
   getUsers: (includeDisabled) => `/api/user?includeDisabled=${includeDisabled}`,
+  getUserRoles: () => '/api/user/roles',
   upateUser: (user) => `/api/user/${user.id}`,
   login: () => '/api/auth/login',
   refreshToken: () => '/api/auth/refresh',

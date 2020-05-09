@@ -1,6 +1,7 @@
 import reducer from './userReducer';
 import * as Actions from '../actions/userActions';
 import usersMock from '../mocks/usersList';
+import userRolesMock from '../mocks/userRoles';
 
 let initialState;
 
@@ -8,6 +9,7 @@ describe('Reducers > UsersList', () => {
   beforeEach(() => {
     initialState = {
       users: [],
+      userRoles: [],
       loading: false,
     };
   });
@@ -47,6 +49,57 @@ describe('Reducers > UsersList', () => {
 
     const expected = {
       ...initialState,
+      loading: false,
+    };
+
+    expect(reducerUnderTest).toEqual(expected);
+  });
+});
+
+describe('Reducers > UserRoles', () => {
+  beforeEach(() => {
+    initialState = {
+      users: [],
+      userRoles: [],
+      loading: false,
+    };
+  });
+
+  it('should handle GET_USERROLES_REQUESTED', () => {
+    const reducerUnderTest = reducer(
+      undefined,
+      Actions.getUserRolessRequested(),
+    );
+
+    const expected = {
+      ...initialState,
+      loading: true,
+    };
+
+    expect(reducerUnderTest).toEqual(expected);
+  });
+
+  it('should handle GET_USERROLES_RECEIVED', () => {
+    const reducerUnderTest = reducer(
+      undefined,
+      Actions.getUserRolesReceived(userRolesMock),
+    );
+
+    const expected = {
+      ...initialState,
+      userRoles: userRolesMock,
+      loading: false,
+    };
+
+    expect(reducerUnderTest).toEqual(expected);
+  });
+
+  it('should handle GET_USERROLES_FAILED', () => {
+    const reducerUnderTest = reducer(undefined, Actions.getUserRolesFailed());
+
+    const expected = {
+      ...initialState,
+      userRoles: [],
       loading: false,
     };
 
