@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from '../../apiClient';
 import ActionTypes from './index';
 import endpoints from '../../../endpoints';
 const baseUrl = process.env.API_URL;
@@ -43,11 +43,11 @@ export function updateUserFailed(data) {
   };
 }
 
-export function getUsers() {
+export function getUsers(includeDisabled = true) {
   return function (dispatch) {
     dispatch(getUsersRequested());
-    const uri = baseUrl + endpoints.getUsers();
-    return axios.get(uri).then(
+    const uri = baseUrl + endpoints.getUsers(includeDisabled);
+    return apiClient.get(uri).then(
       (response) => dispatch(getUsersReceived(response.data)),
       (errors) => dispatch(getUsersFailed(errors)),
     );
@@ -58,7 +58,7 @@ export function updateUser(user) {
   return function (dispatch) {
     dispatch(updateUserRequested(user));
     const uri = baseUrl + endpoints.upateUser(user);
-    return axios.put(uri, user).then(
+    return apiClient.put(uri, user).then(
       () => dispatch(updateUserSuccess(user)),
       (errors) => dispatch(updateUserFailed({ errors, user })),
     );
