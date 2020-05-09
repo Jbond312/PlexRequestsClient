@@ -71,5 +71,3 @@ export function setApiInterceptors() {
 }
 
 export default apiClient;
-
-module.exports = apiClient;
