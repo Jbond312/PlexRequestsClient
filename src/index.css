@@ -92,3 +92,14 @@ tbody tr:hover a {
   background-color: #eac48a;
   border: none;
 }
+
+.btn-save {
+  float: right;
+  background-color: #d58915;
+  border: none;
+}
+
+.btn-save:hover {
+  background-color: #eac48a;
+  border: none;
+}

@@ -45,6 +45,7 @@ module.exports = {
         test: /(\.css)$/,
         use: ['style-loader', 'css-loader'],
       },
+      { test: /\.(config)$/, loader: 'file-loader?name=[name].[ext]' },
     ],
   },
 };
