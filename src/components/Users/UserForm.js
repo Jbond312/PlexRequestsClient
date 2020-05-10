@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Separator from '../common/Separator';
 import InlineLabel from '../common/InlineLabel';
 import ToggleSwitch from '../common/ToggleSwitch';
+import { connect } from 'react-redux';
 
-const UserForm = ({ user, onChange, onSave = {} }) => {
+const UserForm = ({
+  user,
+  userRoleMap,
+  onRoleChanged,
+  onDisable,
+  onSave = {},
+}) => {
   return (
     <>
       <h2 style={{ marginBottom: '50px' }}>Manage User</h2>
@@ -13,14 +21,12 @@ const UserForm = ({ user, onChange, onSave = {} }) => {
         <Separator />
         <InlineLabel label="Username" value={user.username} />
         <Separator />
-        <div style={{ display: 'inline-block' }}>
-          <label style={{ width: '100px', marginRight: '100px' }}>
-            Disabled
-          </label>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Disabled</label>
           <ToggleSwitch
             name="isDisabled"
-            value={user.isDisabled}
-            onChange={(e) => onChange(e, user)}
+            value={user.isDisabled === true}
+            onChange={onDisable}
           />
         </div>
         <Separator />
@@ -40,22 +46,67 @@ const UserForm = ({ user, onChange, onSave = {} }) => {
             'Never logged in'
           }
         />
+        <Separator />
+        <div className="form-group row">
+          <div className="col-sm-2">Roles</div>
+          <div className="col-sm-10">
+            {user.roles &&
+              userRoleMap.map((role) => {
+                return (
+                  <div
+                    key={role.name}
+                    className="form-check row"
+                    style={{ marginLeft: '1px', marginBottom: '10px' }}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name={role.name}
+                      style={{ width: '15px', height: '15px' }}
+                      id={role.name}
+                      checked={role.checked}
+                      onChange={onRoleChanged}
+                    />
+                    <label className="form-check-label" htmlFor={role.name}>
+                      {role.name}
+                    </label>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <Separator />
+        <button type="submit" className="btn btn-save">
+          Save
+        </button>
       </form>
-      <Separator />
-      <InlineLabel label="Roles" value="ROLES TO GO HERE" />
-      <Separator />
-      <button type="submit" className="btn btn-save">
-        Save
-      </button>
     </>
   );
 };
 
 UserForm.propTypes = {
   user: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
+  userRoles: PropTypes.array.isRequired,
+  userRoleMap: PropTypes.array.isRequired,
+  onRoleChanged: PropTypes.func.isRequired,
+  onDisable: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   errors: PropTypes.object,
 };
 
-export default UserForm;
+function mapStateToProps(_, ownProps) {
+  let userRoleMap = [];
+  if (ownProps.user && ownProps.userRoles) {
+    userRoleMap = ownProps.userRoles.map((role) => {
+      return {
+        name: role,
+        checked: ownProps.user.roles.includes(role),
+      };
+    });
+  }
+  return {
+    userRoleMap: userRoleMap,
+  };
+}
+
+export default connect(mapStateToProps)(UserForm);

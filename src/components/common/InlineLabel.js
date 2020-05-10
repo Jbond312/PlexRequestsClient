@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const InlineLabel = ({ label, value }) => {
   return (
-    <div style={{ display: 'inline-block' }}>
-      <label style={{ width: '100px' }}>{label}</label>
-      <label style={{ marginLeft: '100px' }}>{value}</label>
+    <div className="form-group row">
+      <label className="col-sm-2 col-form-label">{label}</label>
+      <label className="col-sm-10">{value}</label>
     </div>
   );
 };
