@@ -6,6 +6,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import './components/common/Spinner.css';
+import './components/common/ToggleSwitch.css';
 
 import App from './components/App';
 import { setApiInterceptors } from './components/apiClient';
