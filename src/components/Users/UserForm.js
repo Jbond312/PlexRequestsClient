@@ -4,7 +4,7 @@ import Separator from '../common/Separator';
 import InlineLabel from '../common/InlineLabel';
 import ToggleSwitch from '../common/ToggleSwitch';
 
-const UserForm = ({ user, onChange, onSave, errors = {} }) => {
+const UserForm = ({ user, onChange, onSave = {} }) => {
   return (
     <>
       <h2 style={{ marginBottom: '50px' }}>Manage User</h2>

@@ -2,9 +2,8 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
 import apiClient from '../../apiClient';
-import * as loginActions from './loginActions';
+import * as loginActions from './authActions';
 import ActionTypes from './index';
-import loginSuccessMock from '../mocks/loginSuccess';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -40,20 +39,24 @@ describe('Actions > Login', () => {
   it('should create an action when login successful', () => {
     const expected = {
       type: ActionTypes.LOGIN_SUCCESS,
-      authData: loginSuccessMock,
     };
 
-    expect(loginActions.loginSuccess(loginSuccessMock)).toEqual(expected);
+    expect(loginActions.loginSuccess()).toEqual(expected);
   });
 
   it('should call login endpoint', () => {
     apiClient.post.mockImplementationOnce(() =>
-      Promise.resolve({ data: loginSuccessMock }),
+      Promise.resolve({
+        data: {
+          accessToken: 'accessToken123',
+          refreshToken: 'refreshToken456',
+        },
+      }),
     );
 
     const expectedActions = [
       { type: ActionTypes.LOGIN_REQUESTED, credentials: expectedCredentials },
-      { type: ActionTypes.LOGIN_SUCCESS, authData: { ...loginSuccessMock } },
+      { type: ActionTypes.LOGIN_SUCCESS },
     ];
 
     const store = mockStore({ usersList: {} });

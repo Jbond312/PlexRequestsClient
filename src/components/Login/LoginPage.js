@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import * as Selectors from '../redux/selectors/loginSelectors';
-import LoginForm from './LoginForm';
-import { login } from '../redux/actions/loginActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
+
+import * as Selectors from '../redux/selectors/authSelectors';
+import { login } from '../redux/actions/authActions';
+import LoginForm from './LoginForm';
 
 const LoginPage = ({ isAuthenticated, login }) => {
   const [loginData, setLoginData] = useState({ username: '', password: '' });
@@ -49,13 +50,17 @@ const LoginPage = ({ isAuthenticated, login }) => {
 
   return (
     <>
-      <LoginForm
-        loginData={loginData}
-        errors={errors}
-        onChange={handleChange}
-        onSave={handleSave}
-        canSave={canSave}
-      />
+      {isAuthenticated ? (
+        <Redirect to="/" />
+      ) : (
+        <LoginForm
+          loginData={loginData}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          canSave={canSave}
+        />
+      )}
     </>
   );
 };
@@ -67,7 +72,7 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: Selectors.getIsAuthenticated(state),
+    isAuthenticated: Selectors.getIsLoggedIn(state),
   };
 }
 
