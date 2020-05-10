@@ -68,7 +68,7 @@ export function getUsers(includeDisabled = true) {
     dispatch(getUsersRequested());
     const uri = baseUrl + endpoints.getUsers(includeDisabled);
     return apiClient.get(uri).then(
-      (response) => dispatch(getUsersReceived(response.data)),
+      (response) => dispatch(getUsersReceived(response.data.users)),
       (errors) => dispatch(getUsersFailed(errors)),
     );
   };

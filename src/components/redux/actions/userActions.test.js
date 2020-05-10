@@ -41,7 +41,7 @@ describe('Actions > GetUsers', () => {
 
   it('should fetchUsersList', () => {
     apiClient.get.mockImplementationOnce(() =>
-      Promise.resolve({ data: usersMock }),
+      Promise.resolve({ data: { users: usersMock } }),
     );
 
     const expectedActions = [
