@@ -1,4 +1,8 @@
-import { setCookie } from '../../../utils/cookieHelper';
+import {
+  setToken,
+  setRefreshToken,
+  clearCookies,
+} from '../../../utils/cookieHelper';
 import apiClient from '../../apiClient';
 import ActionTypes from './index';
 import endpoints from '../../../endpoints';
@@ -11,10 +15,9 @@ export function loginRequested(username, password) {
   };
 }
 
-export function loginSuccess(authData) {
+export function loginSuccess() {
   return {
     type: ActionTypes.LOGIN_SUCCESS,
-    authData: authData,
   };
 }
 
@@ -22,6 +25,18 @@ export function loginFailed(errors) {
   return {
     type: ActionTypes.LOGIN_FAILED,
     errors: errors,
+  };
+}
+
+export function getAuthStatus() {
+  return {
+    type: ActionTypes.GET_AUTH_STATUS,
+  };
+}
+
+export function logoutSuccess() {
+  return {
+    type: ActionTypes.LOGOUT_SUCCESS,
   };
 }
 
@@ -40,14 +55,21 @@ export function login(username, password) {
             response.data.accessToken.length > 0 &&
             response.data.refreshToken.length > 0
           ) {
-            setCookie('token', response.data.accessToken, 60 * 24 * 30);
-            setCookie('refreshToken', response.data.refreshToken, 60 * 24 * 30);
-            return dispatch(loginSuccess(response.data));
+            setToken(response.data.accessToken);
+            setRefreshToken(response.data.refreshToken);
+            return dispatch(loginSuccess());
           } else {
             return dispatch(loginFailed('Unexpected exception'));
           }
         },
         (errors) => dispatch(loginFailed(errors)),
       );
+  };
+}
+
+export function logout() {
+  return function (dispatch) {
+    clearCookies();
+    return dispatch(logoutSuccess());
   };
 }

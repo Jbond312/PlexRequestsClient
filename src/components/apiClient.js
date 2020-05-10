@@ -1,7 +1,13 @@
 import axios from 'axios';
 
-import { setCookie, getCookie } from '../utils/cookieHelper';
+import {
+  setToken,
+  setRefreshToken,
+  getToken,
+  getRefreshToken,
+} from '../utils/cookieHelper';
 import endpoints from '../endpoints';
+import AuthStatus from '../enums/authStatus';
 
 const baseUrl = process.env.API_URL;
 
@@ -17,12 +23,16 @@ const apiClient = axios.create(() => {
   };
 });
 
-export const tokenSelector = (state) => state.auth.accessToken;
+export const tokenSelector = (state) => state.auth.authStatus;
 
-export const setAuthHeader = () => {
-  const token = getCookie('token');
-  if (token && token.length > 0) {
-    apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
+export const setAuthHeader = (authStatus) => {
+  if (authStatus == AuthStatus.LOGGED_IN) {
+    const token = getToken();
+    if (token && token.length > 0) {
+      apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
+  } else {
+    apiClient.defaults.headers.common.Authorization = '';
   }
 };
 
@@ -46,14 +56,14 @@ export function setApiInterceptors() {
             redirect: 'follow',
             referrer: 'no-referrer',
             body: JSON.stringify({
-              accessToken: getCookie('token'),
-              refreshToken: getCookie('refreshToken'),
+              accessToken: getToken(),
+              refreshToken: getRefreshToken(),
             }),
           })
             .then((res) => res.json())
             .then((res) => {
-              setCookie('token', res.accessToken, 60 * 24 * 30);
-              setCookie('refreshToken', res.refreshToken, 60 * 24 * 30);
+              setToken(res.accessToken);
+              setRefreshToken(res.refreshToken);
               originalReq.headers[
                 'Authorization'
               ] = `Bearer ${res.accessToken}`;
