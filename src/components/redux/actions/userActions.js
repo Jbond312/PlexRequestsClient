@@ -79,7 +79,7 @@ export function getUserRoles() {
     dispatch(getUserRolessRequested());
     const uri = baseUrl + endpoints.getUserRoles();
     return apiClient.get(uri).then(
-      (response) => dispatch(getUserRolesReceived(response.data)),
+      (response) => dispatch(getUserRolesReceived(response.data.roles)),
       (errors) => dispatch(getUserRolesFailed(errors)),
     );
   };
@@ -88,7 +88,7 @@ export function getUserRoles() {
 export function updateUser(user) {
   return function (dispatch) {
     dispatch(updateUserRequested(user));
-    const uri = baseUrl + endpoints.upateUser(user);
+    const uri = baseUrl + endpoints.updateUser(user);
     return apiClient.put(uri, user).then(
       () => dispatch(updateUserSuccess(user)),
       (errors) => dispatch(updateUserFailed({ errors, user })),

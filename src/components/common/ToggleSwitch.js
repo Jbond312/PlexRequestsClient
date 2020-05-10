@@ -10,7 +10,7 @@ const ToggleSwitch = ({ name, onChange, value, disabled = false }) => {
         <input
           type="checkbox"
           name={name}
-          className="form-control"
+          className="col-sm-10"
           checked={value}
           onChange={onChange}
           disabled={disabled}

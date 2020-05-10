@@ -103,3 +103,8 @@ tbody tr:hover a {
   background-color: #eac48a;
   border: none;
 }
+
+.row .switch {
+  margin-left: 15px;
+  margin-top: 10px;
+}

@@ -18,7 +18,7 @@ const Header = ({ isAuthenticated }) => {
         Users
       </NavLink>
       <NavLink
-        to={'/' + isAuthenticated ? 'logout' : 'login'}
+        to={'/' + (isAuthenticated ? 'logout' : 'login')}
         activeStyle={activeStyle}
         style={{ float: 'right' }}
       >
